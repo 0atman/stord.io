@@ -8,4 +8,4 @@ web:
   links:
     - db
 db:
-  image: mongo
+  image: redis
