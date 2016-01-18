@@ -1,6 +1,6 @@
 ---
 title: "httpie"
-bg: grey  #defined in _config.yml, can use html color like '#0fbfcf'
+bg: black  #defined in _config.yml, can use html color like '#0fbfcf'
 color: white   #text color
 fa-icon: terminal
 ---
