@@ -1,12 +1,9 @@
 ---
-title: "Examples"
+title: "Command line with `httpie`"
 bg: black  #defined in _config.yml, can use html color like '#0fbfcf'
 color: white   #text color
 fa-icon: terminal
 ---
-
-## Command line with `httpie`
-
 
 {% highlight ruby linenos=table %}
 http 'stord.io/api/store/hello?auth=1234'
@@ -24,13 +21,4 @@ Server: Werkzeug/0.11.3 Python/2.7.11
 {
     "success": "world"
 }
-{% endhighlight %}
-
-## Python with `requests`
-
-{% highlight python linenos=table %}
-import requests
-
-print requests.post('http://stord.io/api/store/hello?auth=1234', data={'data':'world'}).text
-u'{"success": "world"}\n'
 {% endhighlight %}
