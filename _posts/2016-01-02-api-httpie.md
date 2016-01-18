@@ -1,5 +1,5 @@
 ---
-title: "Command line"
+title: "Command line (with httpie)"
 bg: black  #defined in _config.yml, can use html color like '#0fbfcf'
 color: white   #text color
 fa-icon: terminal
