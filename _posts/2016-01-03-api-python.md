@@ -2,11 +2,15 @@
 title: "Python"
 bg: black  #defined in _config.yml, can use html color like '#0fbfcf'
 color: white   #text color
-fa-icon: fa-file-code-o
+fa-icon: file-code-o
 ---
 
 {% highlight python linenos=table %}
->>> import requests
->>> print requests.post('http://stord.io/api/store/hello?auth=1234', data={'data':'world'}).text
+import requests
+requests.post('http://stord.io/api/store/hello?auth=1234', data={'data':'world'}).text
+{% endhighlight %}
+
+Returns:
+{% highlight python linenos=table %}
 u'{"success": "world"}\n'
 {% endhighlight %}
