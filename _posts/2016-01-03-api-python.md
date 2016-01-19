@@ -11,7 +11,7 @@ requests.post('http://stord.io/api/store/hello?auth=1234', data={'data':'world'}
 u'{"success": "world"}\n'
 {% endhighlight %}
 
-Easy! Lets throw together a few functions to store data simply.
+Easy! Lets throw together a few functions to store data simply:
 
 {% highlight python linenos=table %}
 import requests
