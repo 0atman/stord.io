@@ -17,13 +17,13 @@ Easy! Lets throw together a few functions to store data simply:
 import requests
 
 
-url = 'http://stord.io/key/'
+base_url = 'http://stord.io/key/'
 
 def get(key):
-    return requests.get(url + key, {'auth': '1234'}).json()
+    return requests.get(base_url + key, {'auth': '1234'}).json()
 
 def put(key, value):
-    return requests.put(url + key, {'auth': '1234', 'data': value}).json()
+    return requests.put(base_url + key, {'auth': '1234', 'data': value}).json()
 
 get('hello')
 {"success": "world"}
