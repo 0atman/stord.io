@@ -16,6 +16,9 @@ Easy! Lets throw together a few functions to store data simply:
 {% highlight python linenos=table %}
 import requests
 
+
+url = 'http://stord.io/key/'
+
 def get(key):
     return requests.get(url + key, {'auth': '1234'}).json()
 
