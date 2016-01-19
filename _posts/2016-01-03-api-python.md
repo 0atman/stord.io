@@ -8,7 +8,6 @@ fa-icon: file-code-o
 {% highlight python linenos=table %}
 import requests
 requests.post('http://stord.io/api/store/hello?auth=1234', data={'data':'world'}).text
-
 u'{"success": "world"}\n'
 {% endhighlight %}
 
