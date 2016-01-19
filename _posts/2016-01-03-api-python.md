@@ -16,8 +16,11 @@ Easy! Lets throw together a few functions to store data simply:
 {% highlight python linenos=table %}
 import requests
 
-get = lambda key: requests.get(url + key, {'auth': '1234'}).json()
-put = lambda key, value: requests.put(url + key, {'auth': '1234', 'data': value}).json()
+def get(key):
+    return requests.get(url + key, {'auth': '1234'}).json()
+
+def put(key, value):
+    return requests.put(url + key, {'auth': '1234', 'data': value}).json()
 
 get('hello')
 {"success": "world"}
