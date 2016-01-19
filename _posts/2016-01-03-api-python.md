@@ -14,3 +14,16 @@ Returns:
 {% highlight python linenos=table %}
 u'{"success": "world"}\n'
 {% endhighlight %}
+
+Lets throw together a few functions to store data simply.
+
+{% highlight python linenos=table %}
+get = lambda key: requests.get(url + key, {'auth': '1234'}).json()
+put = lambda key, value: requests.put(url + key, {'auth': '1234', 'data': value}).json()
+
+get('hello')
+{"success": "world"}
+
+put('hello', 'world')
+{"success": "world"}
+{% endhighlight %}
