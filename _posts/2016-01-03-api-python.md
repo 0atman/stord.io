@@ -22,6 +22,9 @@ put = lambda key, value: requests.put(url + key, {'auth': '1234', 'data': value}
 get('hello')
 {"success": "world"}
 
-put('hello', 'world')
+put('hello', 'universe')
 {"success": "world"}
+
+get('hello')
+{"success": "universe"}
 {% endhighlight %}
