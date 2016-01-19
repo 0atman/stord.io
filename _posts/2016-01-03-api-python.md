@@ -8,14 +8,11 @@ fa-icon: file-code-o
 {% highlight python linenos=table %}
 import requests
 requests.post('http://stord.io/api/store/hello?auth=1234', data={'data':'world'}).text
-{% endhighlight %}
 
-Returns:
-{% highlight python linenos=table %}
 u'{"success": "world"}\n'
 {% endhighlight %}
 
-Lets throw together a few functions to store data simply.
+Easy! Lets throw together a few functions to store data simply.
 
 {% highlight python linenos=table %}
 import requests
