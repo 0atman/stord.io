@@ -16,8 +16,8 @@ u'{"success": "world"}\n'
 ### GET
 
 {% highlight python linenos=table %}
-import requests
-requests.get('http://stord.io/api/store/hello?auth=1234').text
+>>> import requests
+>>> requests.get('http://stord.io/api/store/hello?auth=1234').text
 u'{"success": "world"}\n'
 {% endhighlight %}
 
@@ -35,12 +35,12 @@ def get(key):
 def put(key, value):
     return requests.put(base_url + key, {'auth': '1234', 'data': value}).json()
 
-get('hello')
+>>> get('hello')
 {"success": "world"}
 
-put('hello', 'universe')
+>>> put('hello', 'universe')
 {"success": "world"}
 
-get('hello')
+>>> get('hello')
 {"success": "universe"}
 {% endhighlight %}
