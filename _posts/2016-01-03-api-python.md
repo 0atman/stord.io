@@ -1,6 +1,6 @@
 ---
 title: "Python"
-bg: black  #defined in _config.yml, can use html color like '#0fbfcf'
+bg: '#006600'  #defined in _config.yml, can use html color like '#0fbfcf'
 color: white  #text color
 fa-icon: file-code-o
 ---
