@@ -7,18 +7,28 @@ from flask import Flask, request
 from flask import render_template
 from redis import StrictRedis
 from flask_restful import Resource, Api, reqparse
+from flask_mail import Mail, Message
 
 # Create application
 app = Flask(__name__)
 app.debug = False
+app.config['MAIL_SERVER'] = 'mailer'
 
+mail = Mail(app)
 # Create dummy secrey key so we can use sessions
 app.config['SECRET_KEY'] = 'a908df79a8df7ga89dfg123456790'
 r = StrictRedis(host='db', port=6379, db=0)
 parser = reqparse.RequestParser()
 parser.add_argument('auth')
 
-
+'''
+msg = Message("Hello",
+	  sender="auth@stord.io",
+	  recipients=["tristram@oaten.name"])
+msg.body = "testing"
+msg.html = "<b>testing</b>"
+mail.send(msg)
+'''
 def check_auth(auth):
     """
     This function is called to check if the auth code is in the db.
