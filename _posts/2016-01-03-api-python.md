@@ -9,16 +9,16 @@ fa-icon: file-code-o
 
 {% highlight python linenos=table %}
 >>> import requests
->>> requests.post('http://stord.io/api/store/hello?auth=1234', data={'data':'world'}).text
-u'{"success": "world"}\n'
+>>> requests.post('http://stord.io/key?auth=1234', data={'hello':'world'}).text
+u'{"hello": "world"}\n'
 {% endhighlight %}
 
 ### GET
 
 {% highlight python linenos=table %}
 >>> import requests
->>> requests.get('http://stord.io/api/store/hello?auth=1234').text
-u'{"success": "world"}\n'
+>>> requests.get('http://stord.io/key/hello?auth=1234').json()
+{"hello": "world"}
 {% endhighlight %}
 
 Easy! Lets throw together a few functions to store data simply:
@@ -36,11 +36,11 @@ def put(key, value):
     return requests.put(base_url + key, {'auth': '1234', 'data': value}).json()
 
 >>> get('hello')
-{"success": "world"}
+{"hello": "world"}
 
 >>> put('hello', 'universe')
-{"success": "world"}
+{"hello": "world"}
 
 >>> get('hello')
-{"success": "universe"}
+{"hello": "universe"}
 {% endhighlight %}
