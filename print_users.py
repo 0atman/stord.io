@@ -4,7 +4,6 @@ from redis import StrictRedis
 
 
 r = StrictRedis(host='db', port=6379, db=0)
-import pdb; pdb.set_trace()
 users = [
     v for
     v in r.hgetall('auth').values()
