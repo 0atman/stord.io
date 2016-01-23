@@ -87,7 +87,7 @@ def signup():
     if request.method == 'POST':
         email = request.form['email'].strip()
         msg = Message(
-            "Hello",
+            "Your stord.io api key",
             sender="auth@stord.io",
             recipients=[email]
         )
