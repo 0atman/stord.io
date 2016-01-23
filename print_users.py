@@ -4,10 +4,11 @@ from redis import StrictRedis
 
 
 r = StrictRedis(host='db', port=6379, db=0)
+import pudb; pudb.set_trace()
 users = [
     v for
     v in r.hgetall('auth').values()
-    if '@' in v and v != 'tristram@oaten.name'
+    if '@' in v and 'tristram@oaten.name' not in v
 ]
 
 print json.dumps({
