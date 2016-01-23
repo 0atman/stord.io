@@ -1,5 +1,4 @@
 token:
 	docker-compose run web python generate_token.py
 upgrade:
-	docker-compose build
-	docker-compose up -d --force-recreate
+	ssh root@stord.io cd flask-keyval && docker-compose build && docker-compose up -d --force-recreate
