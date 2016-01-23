@@ -181,6 +181,15 @@ class NewStore(Resource):
 api.add_resource(NewStore, '/key')
 api.add_resource(Store, '/key/<string:key>')
 
+ADMINS = ['tristram@oaten.name']
+if not app.debug:
+    import logging
+    from logging.handlers import SMTPHandler
+    mail_handler = SMTPHandler('mailer',
+                               'server-error@stord.io',
+                               ADMINS, 'stord.io error')
+    mail_handler.setLevel(logging.ERROR)
+    app.logger.addHandler(mail_handler)
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
