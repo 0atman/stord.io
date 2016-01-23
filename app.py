@@ -148,7 +148,7 @@ class Store(Resource):
 
     @requires_auth
     def put(self, key, auth):
-        if not request.data.get('value'):
+        if not json.loads(request.data).get('value'):
             return {'error': 'keys are updated using the keyword "value". Eg. value=yourvalue.'}, 400
         if request.form:
             value = request.form['value']
