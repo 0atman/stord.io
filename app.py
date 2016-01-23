@@ -140,15 +140,15 @@ class Store(Resource):
     @requires_auth
     def put(self, key, auth):
         if request.form:
-            data = request.form['data']
+            value = request.form['value']
         elif request.data:
-            data = json.loads(request.data)['data']
+            value = json.loads(request.data)['value']
         else:
             raise request.form['This will raise a 400 and return immediately']
             # Unreachable
-        if r.hset(auth, key, data) == 0:
+        if r.hset(auth, key, value) == 0:
             return {
-                key: data
+                key: value
             }
         else:
             return 'ERROR', 500
