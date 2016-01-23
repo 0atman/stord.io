@@ -7,7 +7,7 @@ r = StrictRedis(host='db', port=6379, db=0)
 users = [
     v for
     v in r.hgetall('auth').values()
-    if '@' in v and 'tristram@oaten.name' not in v
+    if '@' in v and v != 'tristram@oaten.name'
 ]
 
 print json.dumps({
