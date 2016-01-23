@@ -68,12 +68,15 @@ def requires_auth(f):
     return decorated
 
 
-def generate_token():
+def generate_token(email):
     """
     Creates and returns a new auth token.
     """
     new_token = uuid4()
-    r.hset('auth', new_token, datetime.datetime.now())
+    r.hset('auth', new_token, "%s:%s" % (
+        email,
+        str(datetime.datetime.now())
+    ))
     return new_token
 
 
@@ -146,12 +149,10 @@ class Store(Resource):
         else:
             raise request.form['This will raise a 400 and return immediately']
             # Unreachable
-        if r.hset(auth, key, value) == 0:
-            return {
-                key: value
-            }
-        else:
-            return 'ERROR', 500
+        r.hset(auth, key, value)
+        return {
+            key: value
+        }
 
 
 class NewStore(Resource):
@@ -164,12 +165,10 @@ class NewStore(Resource):
         else:
             raise request.form['This will raise a 400 and return immediately']
             # Unreachable
-        if r.hset(auth, key, value) == 0:
-            return {
-                key: value
-            }
-        else:
-            return 'ERROR', 500
+        r.hset(auth, key, value)
+        return {
+            key: value
+        }
 
 api.add_resource(NewStore, '/key')
 api.add_resource(Store, '/key/<string:key>')
