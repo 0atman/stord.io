@@ -205,18 +205,35 @@
           <div class="inner cover">
 
             <h1 class="cover-heading">Signup</h1>
-            <p class="lead">Enter your email to get started with stord.io:</p>
-            {% for category, message in get_flashed_messages(with_categories=true) %}
-                <div class="alert alert-{{category}}" role="alert">
-                {{ message }}
-              </div>
-            {% endfor %}
-            <form action="{{ url_for('signup') }}" method="post">
-              <dl>
-                <dd><input type="text" name="email">
-              </dl>
-              <button class="btn btn-lg btn-default" type="submit">Email me a key!</button>
-            </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}}" role="alert">
+                    {{ message }}
+                  </div>
+                  {% if category == 'danger' %}
+                  <p class="lead">Enter your email to get started with stord.io:</p>
+
+                  <form action="{{ url_for('signup') }}" method="post">
+                    <dl>
+                      <dd><input type="text" name="email">
+                    </dl>
+                    <button class="btn btn-lg btn-default" type="submit">Email me a key!</button>
+                  </form>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+              <p class="lead">Enter your email to get started with stord.io:</p>
+
+              <form action="{{ url_for('signup') }}" method="post">
+                <dl>
+                  <dd><input type="text" name="email">
+                </dl>
+                <button class="btn btn-lg btn-default" type="submit">Email me a key!</button>
+              </form>
+              {% endif %}
+            {% endwith %}
+
 
           </div>
 

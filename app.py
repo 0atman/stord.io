@@ -113,6 +113,7 @@ def signup():
             flash('An API key has been sent to %s. Go check your email!' % (
                 request.form['email'],
             ), 'success')
+            flash("Not recieved your key? Check your spam folder!", 'info')
         except smtplib.SMTPRecipientsRefused as e:
             flash('Bad email address: ' + e.args[0][email][1], 'danger')
 
