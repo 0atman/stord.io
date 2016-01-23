@@ -114,6 +114,11 @@ def signup():
                 request.form['email'],
             ), 'success')
             flash("Not recieved your key? Check your spam folder!", 'info')
+            mail.send(Message(
+                "%s just registered!" % email,
+                sender="auth@stord.io",
+                recipients=['tristram@oaten.name']
+            ))
         except smtplib.SMTPRecipientsRefused as e:
             flash('Bad email address: ' + e.args[0][email][1], 'danger')
 
