@@ -1,17 +1,32 @@
 import os
 from functools import wraps
 import json
+from uuid import uuid4
+import datetime
+import smtplib
 
-from flask import Response, redirect
-from flask import Flask, request
-from flask import render_template
+from flask import (
+    Response,
+    redirect,
+    Flask,
+    request,
+    flash,
+    render_template,
+)
+from flask_restful import (
+    Resource,
+    Api,
+    reqparse,
+)
+from flask_mail import (
+    Mail,
+    Message,
+)
 from redis import StrictRedis
-from flask_restful import Resource, Api, reqparse
-from flask_mail import Mail, Message
 
-# Create application
+
 app = Flask(__name__)
-app.debug = False
+app.debug = True
 app.config['MAIL_SERVER'] = 'mailer'
 
 mail = Mail(app)
@@ -21,14 +36,7 @@ r = StrictRedis(host='db', port=6379, db=0)
 parser = reqparse.RequestParser()
 parser.add_argument('auth')
 
-'''
-msg = Message("Hello",
-	  sender="auth@stord.io",
-	  recipients=["tristram@oaten.name"])
-msg.body = "testing"
-msg.html = "<b>testing</b>"
-mail.send(msg)
-'''
+
 def check_auth(auth):
     """
     This function is called to check if the auth code is in the db.
@@ -60,9 +68,58 @@ def requires_auth(f):
     return decorated
 
 
+def generate_token():
+    """
+    Creates and returns a new auth token.
+    """
+    new_token = uuid4()
+    r.hset('auth', new_token, datetime.datetime.now())
+    return new_token
+
+
 @app.route('/')
 def index():
     return redirect("http://www.stord.io", 301)
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        email = request.form['email'].strip()
+        msg = Message(
+            "Hello",
+            sender="auth@stord.io",
+            recipients=[email]
+        )
+        msg.body = "API Key"
+        msg.html = render_template('email.html', key=generate_token())
+        try:
+            mail.send(msg)
+            lobbyists = [
+                'tristram@oaten.name',
+                'karl@deadlight.net',
+                'lewis@oaten.name',
+                'danyilmaz117@gmail.com',
+                'will@willmoggridge.com',
+                'will.moggridge@gmail.com',
+                'darkxdragon@gmail.com',
+                'robin@robinwinslow.co.uk'
+            ]
+            if request.form['email'] in lobbyists:
+                flash("Welcome #Lobbyist", 'info')
+            flash('An API key has been sent to %s. Go check your email!' % (
+                request.form['email'],
+            ), 'success')
+        except smtplib.SMTPRecipientsRefused as e:
+            flash('Bad email address: ' + e.args[0][email][1], 'danger')
+
+    return render_template('signup.html')
+
+'''
+@app.route('/test')
+def test():
+    return render_template('email.html', key=1234)
+'''
 
 api = Api(app)
 
@@ -77,11 +134,11 @@ class Store(Resource):
             }, 404
         else:
             return {
-                'success': value
+                key: value
             }
 
     @requires_auth
-    def post(self, key, auth):
+    def put(self, key, auth):
         if request.form:
             data = request.form['data']
         elif request.data:
@@ -91,13 +148,30 @@ class Store(Resource):
             # Unreachable
         if r.hset(auth, key, data) == 0:
             return {
-                'success': data
+                key: data
             }
         else:
             return 'ERROR', 500
 
-    put = post
 
+class NewStore(Resource):
+    @requires_auth
+    def post(self, auth):
+
+        if request.data:
+            data = json.loads(request.data)
+            key, value = data.popitem()
+        else:
+            raise request.form['This will raise a 400 and return immediately']
+            # Unreachable
+        if r.hset(auth, key, value) == 0:
+            return {
+                key: value
+            }
+        else:
+            return 'ERROR', 500
+
+api.add_resource(NewStore, '/key')
 api.add_resource(Store, '/key/<string:key>')
 
 
