@@ -95,7 +95,7 @@ def signup():
             recipients=[email]
         )
         msg.body = "API Key"
-        msg.html = render_template('email.html', key=generate_token())
+        msg.html = render_template('email.html', key=generate_token(email))
         try:
             mail.send(msg)
             lobbyists = [
