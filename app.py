@@ -148,15 +148,16 @@ class Store(Resource):
 
     @requires_auth
     def put(self, key, auth):
-        if not json.loads(request.data).get('value'):
-            return {'error': 'keys are updated using the keyword "value". Eg. value=yourvalue.'}, 400
         if request.form:
-            value = request.form['value']
+            data = request.form
         elif request.data:
-            value = json.loads(request.data)['value']
+            data = json.loads(request.data)
         else:
             raise request.form['This will raise a 400 and return immediately']
             # Unreachable
+        value = data.get('value')
+        if not data.get('value'):
+            return {'error': 'keys are updated using the keyword "value". Eg. value=yourvalue.'}, 400
         r.hset(auth, key, value)
         return {
             key: value
