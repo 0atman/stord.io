@@ -6,3 +6,5 @@ A clean, RESTful key/value db for simple web applications. To paraphrase Aaron S
 > Think about the ideal way to store data in a web app. Write the code to make it happen.
 
 To get going, `docker-compose up`
+
+API Design: https://geemus.gitbooks.io/http-api-design/content/
