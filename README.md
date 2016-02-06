@@ -8,3 +8,9 @@ A clean, RESTful key/value db for simple web applications. To paraphrase Aaron S
 To get going, `docker-compose up`
 
 API Design: https://geemus.gitbooks.io/http-api-design/content/
+
+#TODO
+
+ - ssl
+ - gunicorn
+ - user management

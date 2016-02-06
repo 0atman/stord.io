@@ -1,3 +1,4 @@
+"Code for stord.io, a REST wrapper around redis."
 import os
 from functools import wraps
 import json
@@ -26,9 +27,8 @@ from redis import StrictRedis
 
 
 app = Flask(__name__)
-app.debug = False
-app.config['MAIL_SERVER'] = 'mailer'
-
+app.debug = True if os.getenv('FLASK:DEBUG', False) == 'True' else False
+app.config['MAIL_SERVER'] = os.getenv('FLASK:EMAIL_HOST')
 mail = Mail(app)
 # Create dummy secrey key so we can use sessions
 app.config['SECRET_KEY'] = 'a908df79a8df7ga89dfg123456790'
@@ -48,6 +48,7 @@ def authenticate():
     """
     Sends a 401 response that enables basic auth
     """
+
     return Response(
         'Could not verify your access level for that URL.\n'
         'Please provide valid auth token.', 401,
@@ -58,6 +59,7 @@ def requires_auth(f):
     """
     Wrap functions that need auth token with this.
     """
+
     @wraps(f)
     def decorated(*args, **kwargs):
         args = parser.parse_args()
@@ -157,7 +159,10 @@ class Store(Resource):
             # Unreachable
         value = data.get('value')
         if not data.get('value'):
-            return {'error': 'keys are updated using the keyword "value". Eg. value=yourvalue.'}, 400
+            return {
+                'error':
+                'keys are updated with the keyword "value". Eg. value=myvalue.'
+                }, 400
         r.hset(auth, key, value)
         return {
             key: value
@@ -186,13 +191,16 @@ ADMINS = ['tristram@oaten.name']
 if not app.debug:
     import logging
     from logging.handlers import SMTPHandler
-    mail_handler = SMTPHandler('mailer',
-                               'server-error@stord.io',
-                               ADMINS, 'stord.io error')
+    mail_handler = SMTPHandler(
+        os.getenv('FLASK:EMAIL_HOST'),
+        'server-error@stord.io',
+        ADMINS,
+        'stord.io error'
+    )
     mail_handler.setLevel(logging.ERROR)
     app.logger.addHandler(mail_handler)
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('FLASK:PORT'))
     app.run(host='0.0.0.0', port=port)

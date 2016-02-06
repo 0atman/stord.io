@@ -1,21 +1,24 @@
 web:
+  env_file: web.env
   build: .
   command: python app.py
   volumes:
     - .:/code
+  expose:
+    - "80"
   ports:
-    - "80:5000"
+    - "5000:80"
   links:
     - db
     - mailer
+
 db:
   image: redis
   volumes:
     - /data
+
 mailer:
   image: tozd/postfix
-  ports:
-    - "25:25"
   expose:
     - "25"
   environment:
@@ -23,3 +26,12 @@ mailer:
     - MY_NETWORKS=172.17.0.0/16 127.0.0.0/8
     - MY_DESTINATION=localhost.localdomain, localhost, stord.io
     - ROOT_ALIAS=admin@stord.io
+
+nginx-proxy:
+  image: jwilder/nginx-proxy
+  ports:
+    - "80:80"
+  links:
+    - web
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock:ro
