@@ -12,7 +12,6 @@ timezone: null
 lsi: false
 markdown: kramdown
 highlighter: rogue
-future: true
 
 
 ### content configuration ###
