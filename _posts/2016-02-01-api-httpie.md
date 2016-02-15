@@ -22,7 +22,7 @@ Server: Werkzeug/0.11.3 Python/2.7.11
 {
     "hello": "world"
 }
-```yaml
+```
 
 
 ### PUT
