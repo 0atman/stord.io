@@ -8,11 +8,11 @@ fa-icon: terminal
 
 ### POST
 
-{% highlight ruby linenos=table %}
+```ruby
 http post 'stord.io/key?auth=1234' hello=world
-{% endhighlight %}
+```
 
-{% highlight yaml linenos=table %}
+```yaml
 HTTP/1.0 200 OK
 Content-Length: 21
 Content-Type: application/json
@@ -22,16 +22,16 @@ Server: Werkzeug/0.11.3 Python/2.7.11
 {
     "hello": "world"
 }
-{% endhighlight %}
+```yaml
 
 
 ### PUT
 
-{% highlight ruby linenos=table %}
+```ruby
 http put 'stord.io/key/hello?auth=1234' value=world
-{% endhighlight %}
+```
 
-{% highlight yaml linenos=table %}
+```yaml
 HTTP/1.0 200 OK
 Content-Length: 21
 Content-Type: application/json
@@ -41,15 +41,15 @@ Server: Werkzeug/0.11.3 Python/2.7.11
 {
     "hello": "world"
 }
-{% endhighlight %}
+```
 
 ### GET
 
-{% highlight ruby linenos=table %}
+```ruby
 http 'stord.io/key/hello?auth=1234'
-{% endhighlight %}
+```
 
-{% highlight yaml linenos=table %}
+```yaml
 HTTP/1.0 200 OK
 Content-Length: 27
 Content-Type: application/json
@@ -59,4 +59,4 @@ Server: Werkzeug/0.11.3 Python/2.7.11
 {
     "hello": "world"
 }
-{% endhighlight %}
+```
