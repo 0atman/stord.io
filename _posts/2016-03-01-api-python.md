@@ -3,6 +3,7 @@ title: "Python"
 bg: '#05152e'  #defined in _config.yml, can use html color like '#0fbfcf'
 color: white  #text color
 fa-icon: file-code-o
+date: 2016-03-01 01:01:01 -0000
 ---
 
 ### POST
