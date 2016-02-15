@@ -7,23 +7,23 @@ fa-icon: file-code-o
 
 ### POST
 
-{% highlight python linenos=table %}
+```python
 >>> import requests
 >>> requests.post('http://stord.io/key?auth=1234', data={'hello':'world'}).text
 u'{"hello": "world"}\n'
-{% endhighlight %}
+```
 
 ### GET
 
-{% highlight python linenos=table %}
+```python
 >>> import requests
 >>> requests.get('http://stord.io/key/hello?auth=1234').json()
 {"hello": "world"}
-{% endhighlight %}
+```
 
 Easy! Lets throw together a few functions to store data simply:
 
-{% highlight python linenos=table %}
+```python
 import requests
 
 
@@ -43,4 +43,4 @@ def put(key, value):
 
 >>> get('hello')
 {"hello": "universe"}
-{% endhighlight %}
+```
