@@ -531,18 +531,18 @@ html { box-sizing: border-box; }
   
   
   
-  nav .p-api-httpie { border-color: #111111; }
-  #api-httpie { background-color: #111111 !important; color: #f8f8f8; }
+  nav .p-api-httpie { border-color: #317331; }
+  #api-httpie { background-color: #317331 !important; color: #f8f8f8; }
   #api-httpie a { color: #f8f8f8; }
-  #api-httpie .sectiondivider { color: #111111; }
+  #api-httpie .sectiondivider { color: #317331; }
 
   
   
   
-  nav .p-details { border-color: #317331; }
-  #details { background-color: #317331 !important; color: #f8f8f8; }
+  nav .p-details { border-color: #111111; }
+  #details { background-color: #111111 !important; color: #f8f8f8; }
   #details a { color: #f8f8f8; }
-  #details .sectiondivider { color: #317331; }
+  #details .sectiondivider { color: #111111; }
 
   
   
