@@ -507,34 +507,10 @@ html { box-sizing: border-box; }
   
   
   
-  nav .p-roadmap { border-color: #111111; }
-  #roadmap { background-color: #111111 !important; color: #f8f8f8; }
-  #roadmap a { color: #f8f8f8; }
-  #roadmap .sectiondivider { color: #111111; }
-
-  
-  
-  
-  nav .p-api-ruby { border-color: #990000; }
-  #api-ruby { background-color: #990000 !important; color: #f8f8f8; }
-  #api-ruby a { color: #f8f8f8; }
-  #api-ruby .sectiondivider { color: #990000; }
-
-  
-  
-  
-  nav .p-api-python { border-color: #05152e; }
-  #api-python { background-color: #05152e !important; color: #f8f8f8; }
-  #api-python a { color: #f8f8f8; }
-  #api-python .sectiondivider { color: #05152e; }
-
-  
-  
-  
-  nav .p-api-httpie { border-color: #c869bf; }
-  #api-httpie { background-color: #c869bf !important; color: #f8f8f8; }
+  nav .p-api-httpie { border-color: #111111; }
+  #api-httpie { background-color: #111111 !important; color: #f8f8f8; }
   #api-httpie a { color: #f8f8f8; }
-  #api-httpie .sectiondivider { color: #c869bf; }
+  #api-httpie .sectiondivider { color: #111111; }
 
   
   

@@ -1,110 +1,8 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stord.io</title>
-	<meta name="keywords" content="keyvalue, database, rest">
-	<meta name="description" content="A clean, RESTful key/value db for simple web applications.">
-  <link rel="stylesheet" href="combo.css">
-  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-  
-	
-</head>
-<body>
-  <div id="main">
+<h3 id="post">POST</h3>
 
-    <nav><ul>
-      
-        
-        <li class="p-intro"><a href="#intro">stord.io</a></li>
-      
-        
-        <li class="p-details"><a href="#details">Details</a></li>
-      
-        
-        <li class="p-api-httpie"><a href="#api-httpie">httpie</a></li>
-      
-        
-        <li class="p-api-python"><a href="#api-python">Python</a></li>
-      
-        
-        <li class="p-api-ruby"><a href="#api-ruby">ruby</a></li>
-      
-        
-        <li class="p-roadmap"><a href="#roadmap">Roadmap</a></li>
-      
-    </ul></nav>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">http post &#39;stord.io/key?auth=1234&#39; hello=world</code></pre></figure>
 
-
-    
-      
-      <div id="intro" class="section p-intro">
-        
-        <div class="container center">
-          <p><img src="https://cloud.githubusercontent.com/assets/114097/12648354/85c6710a-c5d1-11e5-95c6-05603b1ef39a.png" alt="logo transparant-white-no-tagline" /></p>
-
-<p>A key-value REST collection for simple web apps. To paraphrase <a href="http://webpy.org/philosophy">Aaron Swartz</a>:</p>
-
-<p><em><strong>Think about the ideal way to store data in a web app. Write the code to make it happen.</strong></em></p>
-
-<p>To get going, simply enter your email to get an api key and start hacking! (no lengthy registration required, your api key IS your account) During alpha, there’s no limit on the amount of data you can store (within reason).</p>
-
-<center>
-<form action="http://stord.io/signup" method="post">
-<input type="text" name="email" />
-<button class="btn btn-lg btn-default" type="submit">Email me a key!</button>
-</form>
-</center>
-
-        </div>
-      </div>
-    
-      
-      <div id="details" class="section p-details">
-        
-        <div class="subtlecircle sectiondivider faicon">
-          <span class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-tasks fa-stack-1x"></i>
-          </span>
-          <h5 class="icon-title">Details</h5>
-        </div>
-        
-        <div class="container ">
-          <p>Stord.io is a key/value store. This is often modelled as a hashmap or a dictionary in programming languages.</p>
-
-<p>Represented in javascript, a response to a query for <code>/key/name</code> could look like this:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">{
-  &quot;name&quot;: &quot;stord.io&quot;
-}</code></pre></div>
-
-<p>Under the hood, stord.io is powered by the proven and scalable Redis database, with a thin python application wrapper, based on Flask. Redis is fast. Like, REALLY fast.</p>
-
-<p>Any string data can be stord. If you need to namespace your data, the redis community have the answer, prepend your keys with your namespace (eg, <code>mynamespace:mykey</code>). Stord.io doesn’t assume anything about your data, make whatever nested schema you want!</p>
-
-        </div>
-      </div>
-    
-      
-      <div id="api-httpie" class="section p-api-httpie">
-        
-        <div class="subtlecircle sectiondivider faicon">
-          <span class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-terminal fa-stack-1x"></i>
-          </span>
-          <h5 class="icon-title">httpie</h5>
-        </div>
-        
-        <div class="container ">
-          <h3 id="post">POST</h3>
-
-<div class="highlight"><pre><code class="language-shell" data-lang="shell">http post &#39;stord.io/key?auth=1234&#39; hello=world</code></pre></div>
-
-<div class="highlight"><pre><code class="language-yaml" data-lang="yaml">HTTP/1.0 200 OK
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">HTTP/1.0 200 OK
 Content-Length: 21
 Content-Type: application/json
 Date: Wed, 20 Jan 2016 12:36:19 GMT
@@ -112,13 +10,13 @@ Server: Werkzeug/0.11.3 Python/2.7.11
 
 {
     &quot;hello&quot;: &quot;world&quot;
-}</code></pre></div>
+}</code></pre></figure>
 
 <h3 id="put">PUT</h3>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">http put &#39;stord.io/key/hello?auth=1234&#39; value=world</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">http put &#39;stord.io/key/hello?auth=1234&#39; value=world</code></pre></figure>
 
-<div class="highlight"><pre><code class="language-yaml" data-lang="yaml">HTTP/1.0 200 OK
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">HTTP/1.0 200 OK
 Content-Length: 21
 Content-Type: application/json
 Date: Wed, 20 Jan 2016 12:36:19 GMT
@@ -126,13 +24,13 @@ Server: Werkzeug/0.11.3 Python/2.7.11
 
 {
     &quot;hello&quot;: &quot;world&quot;
-}</code></pre></div>
+}</code></pre></figure>
 
 <h3 id="get">GET</h3>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">http &#39;stord.io/key/hello?auth=1234&#39;</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">http &#39;stord.io/key/hello?auth=1234&#39;</code></pre></figure>
 
-<div class="highlight"><pre><code class="language-yaml" data-lang="yaml">HTTP/1.0 200 OK
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">HTTP/1.0 200 OK
 Content-Length: 27
 Content-Type: application/json
 Date: Mon, 18 Jan 2016 12:31:55 GMT
@@ -140,136 +38,5 @@ Server: Werkzeug/0.11.3 Python/2.7.11
 
 {
     &quot;hello&quot;: &quot;world&quot;
-}</code></pre></div>
+}</code></pre></figure>
 
-
-        </div>
-      </div>
-    
-      
-      <div id="api-python" class="section p-api-python">
-        
-        <div class="subtlecircle sectiondivider faicon">
-          <span class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-file-code-o fa-stack-1x"></i>
-          </span>
-          <h5 class="icon-title">Python</h5>
-        </div>
-        
-        <div class="container ">
-          <h3 id="post">POST</h3>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python">&gt;&gt;&gt; import requests
-&gt;&gt;&gt; requests.post(&#39;http://stord.io/key?auth=1234&#39;, data={&#39;hello&#39;:&#39;world&#39;}).text
-u&#39;{&quot;hello&quot;: &quot;world&quot;}\n&#39;</code></pre></div>
-
-<h3 id="get">GET</h3>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python">&gt;&gt;&gt; import requests
-&gt;&gt;&gt; requests.get(&#39;http://stord.io/key/hello?auth=1234&#39;).json()
-{&quot;hello&quot;: &quot;world&quot;}</code></pre></div>
-
-<p>Easy! Lets throw together a few functions to store data simply:</p>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python">import requests
-
-
-base_url = &#39;http://stord.io/key/&#39;
-
-def get(key):
-    return requests.get(base_url + key, {&#39;auth&#39;: &#39;1234&#39;}).json()
-
-def put(key, value):
-    return requests.put(base_url + key, {&#39;auth&#39;: &#39;1234&#39;, &#39;data&#39;: value}).json()
-
-&gt;&gt;&gt; get(&#39;hello&#39;)
-{&quot;hello&quot;: &quot;world&quot;}
-
-&gt;&gt;&gt; put(&#39;hello&#39;, &#39;universe&#39;)
-{&quot;hello&quot;: &quot;world&quot;}
-
-&gt;&gt;&gt; get(&#39;hello&#39;)
-{&quot;hello&quot;: &quot;universe&quot;}</code></pre></div>
-
-
-        </div>
-      </div>
-    
-      
-      <div id="api-ruby" class="section p-api-ruby">
-        
-        <div class="subtlecircle sectiondivider faicon">
-          <span class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-file-code-o fa-stack-1x"></i>
-          </span>
-          <h5 class="icon-title">ruby</h5>
-        </div>
-        
-        <div class="container ">
-          <h3 id="post">POST</h3>
-
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">require &#39;net/http&#39;
-
-uri = URI(&#39;stord.io/key?auth=1234&#39;)
-res = Net::HTTP.post_form(uri, &#39;hello&#39; =&gt; &#39;world&#39;)
-puts res.body
-=&gt; &#39;{&quot;hello&quot;: &quot;world&quot;}&#39;</code></pre></div>
-
-<h3 id="get">GET</h3>
-
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">uri = URI(&#39;stord.io/key/hello?auth=1234&#39;)
-puts Net::HTTP.get(uri)
-=&gt; &#39;{&quot;hello&quot;: &quot;world&quot;}&#39;</code></pre></div>
-
-
-        </div>
-      </div>
-    
-      
-      <div id="roadmap" class="section p-roadmap">
-        
-        <div class="subtlecircle sectiondivider faicon">
-          <span class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-line-chart fa-stack-1x"></i>
-          </span>
-          <h5 class="icon-title">Roadmap</h5>
-        </div>
-        
-        <div class="container ">
-          <p>I am very excited about augmenting stord.io with lightweight features that will align with the project’s minimalist philosophy. Here are some ideas I’m working on:</p>
-
-<ul>
-  <li>https (this must happen before beta, as api keys are currently sent in the clear)</li>
-  <li>Searching of keys and values</li>
-  <li>Bulk download/upload (giving us backup and restore)</li>
-</ul>
-
-<p>Am I missing a killer feature? Email me at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;&#115;&#116;&#111;&#114;&#100;&#046;&#105;&#111;">&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;&#115;&#116;&#111;&#114;&#100;&#046;&#105;&#111;</a>, and I’ll probably put it in!</p>
-
-<p>When the alpha test comes to and end I’ll relaunch stord.io in beta, and switch to a freemium model. I will engage the alpha testers to see what the right figures should be, but it will most likely be something around the $1/month and $10/year range, with a discount for alpha users.</p>
-
-        </div>
-      </div>
-    
-
-
-    <div id="footer" class="section text-white">
-      <div class="container">
-        
-        
-<p>Stord.io is the product of a fever dream by <a href="http://www.0atman.com/">0atman</a> — 
-web design by Tim O’Brien <a href="http://t413.com/">t413.com</a></p>
-
-
-      </div>
-    </div>
-  </div>
-
-
-</body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="site.js"></script>
-</html>
