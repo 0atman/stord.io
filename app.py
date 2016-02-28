@@ -30,8 +30,7 @@ app = Flask(__name__)
 app.debug = True if os.getenv('FLASK:DEBUG', False) == 'True' else False
 app.config['MAIL_SERVER'] = os.getenv('FLASK:EMAIL_HOST')
 mail = Mail(app)
-# Create dummy secrey key so we can use sessions
-app.config['SECRET_KEY'] = 'a908df79a8df7ga89dfg123456790'
+app.config['SECRET_KEY'] = 'unused'
 r = StrictRedis(host='db', port=6379, db=0)
 parser = reqparse.RequestParser()
 parser.add_argument('auth')
