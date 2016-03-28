@@ -7,7 +7,7 @@ web:
   expose:
     - "80"
   ports:
-    - "5000:80"
+    - 5001:80
   links:
     - db
     - mailer
@@ -27,11 +27,13 @@ mailer:
     - MY_DESTINATION=localhost.localdomain, localhost, stord.io
     - ROOT_ALIAS=admin@stord.io
 
-nginx-proxy:
-  image: jwilder/nginx-proxy
-  ports:
-    - "80:80"
+caddy:
+  image: abiosoft/caddy
   links:
-    - web
+      - web
   volumes:
-    - /var/run/docker.sock:/tmp/docker.sock:ro
+    - ./Caddyfile:/etc/Caddyfile
+    - /root/.caddy:/root/.caddy
+  ports:
+    - 80:80
+    - 443:443
