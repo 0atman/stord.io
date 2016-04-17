@@ -2,9 +2,7 @@
 title: stord.io
 email: contact@stord.io
 description: > A key-value REST collection for simple web apps. To paraphrase Aaron Swartz:
-
 Think about the ideal way to [store data in a web app]. Write the code to make it happen.
-
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://stord.io" # the base hostname & protocol for your site
 
