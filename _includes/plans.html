@@ -37,7 +37,21 @@
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box">
                     <i class="fa fa-4x fa-diamond wow bounceIn text-primary"></i>
-                    <h3>Yearly</h3>
+                    <form action="{{ url_for('signup') }}" method="POST">
+                  <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+                    data-image="https://cloud.githubusercontent.com/assets/114097/12648354/85c6710a-c5d1-11e5-95c6-05603b1ef39a.png"
+                    data-name="stord.io"
+                    data-description="Yearly Subscription"
+                    data-amount="900"
+                    data-locale="auto"
+                    data-panel-label="Subscribe @"
+                    data-label="$9 / Year"
+                    data-bitcoin=true
+                    data-alipay=true>
+                  </script>
+                </form>
                     <p class="text-muted">
                         Under the hood, stord.io is based on Flask.
                     </p>
