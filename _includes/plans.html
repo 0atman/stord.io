@@ -13,7 +13,21 @@
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box">
                     <i class="fa fa-4x fa-database wow bounceIn text-primary" data-wow-delay=".2s"></i>
-                    <h3>Monthly</h3>
+                    <form action="{{ url_for('signup') }}" method="POST">
+                  <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+                    data-image="https://cloud.githubusercontent.com/assets/114097/12648354/85c6710a-c5d1-11e5-95c6-05603b1ef39a.png"
+                    data-name="stord.io"
+                    data-description="Monthly Subscription"
+                    data-amount="100"
+                    data-locale="auto"
+                    data-panel-label="Subscribe @"
+                    data-label="$1 / Month"
+                    data-bitcoin=true
+                    data-alipay=true>
+                  </script>
+                </form>
                     <p class="text-muted">
                         Stord.io is a key/value store.
                     </p>
