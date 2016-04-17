@@ -1,12 +1,15 @@
 # Site settings
-title:
-email:
-description: > # this means to ignore newlines until "baseurl:"
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "" # the base hostname & protocol for your site
+title: stord.io
+email: contact@stord.io
+description: > A key-value REST collection for simple web apps. To paraphrase Aaron Swartz:
 
-twitter_username:
-github_username:
+Think about the ideal way to [store data in a web app]. Write the code to make it happen.
+
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://stord.io" # the base hostname & protocol for your site
+
+twitter_username: stordiodb
+github_username: 0atman
 
 # Build settings
 markdown: kramdown
