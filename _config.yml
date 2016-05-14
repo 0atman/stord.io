@@ -6,7 +6,7 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://stord.io" # the base hostname & protocol for your site
 
 twitter_username: stordiodb
-github_username: 0atman_test
+github_username: 0atman
 
 # Build settings
 markdown: kramdown
