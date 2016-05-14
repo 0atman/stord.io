@@ -125,11 +125,6 @@ def signup():
 
     return render_template('signup.html')
 
-'''
-@app.route('/test')
-def test():
-    return render_template('email.html', key=1234)
-'''
 
 api = Api(app)
 
