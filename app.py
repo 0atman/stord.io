@@ -131,6 +131,18 @@ api = Api(app)
 
 class Store(Resource):
     @requires_auth
+    def delete(self, key, auth):
+        status = r.hget(auth, key)
+        if status == 1:
+            return {
+                "deleted": "OK"
+                } 
+        else:
+            return {
+            'Not found': key
+            }, 404
+
+    @requires_auth
     def get(self, key, auth):
         value = r.hget(auth, key)
         if value is None:
