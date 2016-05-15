@@ -155,7 +155,7 @@ class Store(Resource):
         if not value:
             return {
                 'error': (
-                    'Please PUT a new value. Eg. value=%s, not %s=%s.'
+                    'Please PUT a new value. Eg. value=%s, not %s=%s. '
                     'If you want to create a new key-value pair, '
                     'POST to /key/' % (
                         data.values()[0],
