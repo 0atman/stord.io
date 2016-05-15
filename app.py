@@ -152,11 +152,18 @@ class Store(Resource):
             raise request.form['This will raise a 400 and return immediately']
             # Unreachable
         value = data.get('value')
-        if not data.get('value'):
+        if not value:
             return {
-                'error':
-                'keys are updated with the keyword "value". Eg. value=myvalue.'
-                }, 400
+                'error': (
+                    'Please PUT a new value. Eg. value=%s, not %s=%s.'
+                    'If you want to create a new key-value pair, '
+                    'POST to /key/' % (
+                        data.values()[0],
+                        data.keys()[0],
+                        data.values()[0]
+                    )
+                )
+            }, 400
         r.hset(auth, key, value)
         return {
             key: value
@@ -166,10 +173,12 @@ class Store(Resource):
 class NewStore(Resource):
     @requires_auth
     def post(self, auth):
-
         if request.data:
             data = json.loads(request.data)
             key, value = data.popitem()
+        elif request.form:
+            key = request.form.keys()[0]
+            value = request.form[key]
         else:
             raise request.form['This will raise a 400 and return immediately']
             # Unreachable
@@ -178,7 +187,7 @@ class NewStore(Resource):
             key: value
         }
 
-api.add_resource(NewStore, '/key')
+api.add_resource(NewStore, '/key/')
 api.add_resource(Store, '/key/<string:key>')
 
 ADMINS = ['tristram@oaten.name']
