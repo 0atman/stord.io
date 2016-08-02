@@ -11,6 +11,5 @@ API Design: https://geemus.gitbooks.io/http-api-design/content/
 
 #TODO
 
- - ssl
  - gunicorn
  - user management
