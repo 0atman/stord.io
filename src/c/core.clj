@@ -17,7 +17,7 @@
 
 (defn check_auth [auth]
   "Returns true if the auth key exists"
-  (string? (transaction (redis/hget "auth" auth))))
+  (str (transaction (redis/hget "auth" auth))))
 
 (defn uuid [] (str (java.util.UUID/randomUUID)))
 
@@ -38,21 +38,21 @@
    (GET "/register/:email" []
      :summary "adds a new uuid key to the auth hash, with `email` key"
      :path-params [email :- String]
-     :return {:message String}
+     :return {:created String}
      (let [new_auth (uuid)]
-       (transaction (redis/hset "auth" email new_auth))
-       new_auth))
+       (transaction (redis/hset "auth" new_auth email))
+       (ok {:created new_auth})))
+
 
    (context "/api/:auth" []
      :tags ["api"]
      :path-params [auth :- String]
 
-
      (GET "/:name" []
         :summary "pulls the key `name` from redis"
         :path-params [name :- String]
         :return {:message String}
-        (if (not (check_auth auth)) <-start here
+        (if (check_auth auth)
           (let [value (transaction (redis/hget auth name))]
             (if (string? value)
               (ok {:message value})
@@ -63,6 +63,8 @@
         :summary "Updates key `name` to `data`"
         :path-params [name :- String]
         :return {:message String}
-        (let [redis_code (transaction (redis/hset auth name data))]
-          (if (= 0 redis_code)
-            (ok {:message "OK"})))))))
+        (if (check_auth auth)
+          (let [redis_code (transaction (redis/hset auth name data))]
+            (if (= 0 redis_code)
+              (ok {:message "OK"})))
+          (unauthorized! "Invalid auth key for post"))))))
