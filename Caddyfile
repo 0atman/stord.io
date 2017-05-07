@@ -1,6 +1,0 @@
-https://stord.io, http://stord.io {
-    log stdout
-    errors stdout
-    proxy / web:80
-    # cors
-}
