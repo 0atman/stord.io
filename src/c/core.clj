@@ -11,7 +11,7 @@
 (defmacro transaction [& body]
   "Start redis transaction"
   `(redis/wcar
-    {:spec {:url (get (System/getenv) "REDIS_URL" "redis://localhost:6379")}}
+    {:spec {:url "redis://redistogo:2ac266ce6bfae96a34a0f9dd11b01ce6@greeneye.redistogo.com:9759"}}
     ~@body))
 
 (defn check_auth [auth]
