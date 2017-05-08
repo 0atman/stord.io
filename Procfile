@@ -1,1 +1,1 @@
-web: lein ring server-headless $PORT 
+web: lein ring uberjar && java $JVM_OPTS -cp target/server.jar
