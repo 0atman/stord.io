@@ -5,6 +5,6 @@
                  [com.taoensso/carmine "2.16.0"]
                  [hiccup "1.0.5"]
                  [proto-repl "0.3.1"]]
-  :ring {:handler c.core/app}
+  :ring {:handler c.core/app :port 3000}
   :uberjar-name "server.jar"
   :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}})
