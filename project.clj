@@ -7,4 +7,5 @@
                  [proto-repl "0.3.1"]]
   :ring {:handler c.core/app :port 5000}
   :uberjar-name "server.jar"
-  :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}})
+  :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}}
+  :min-lein-version "2.0.0")
