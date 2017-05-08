@@ -1,1 +1,1 @@
-web: lein ring server
+web: lein ring server-headless 5000
