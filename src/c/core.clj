@@ -8,11 +8,10 @@
             [ring.util.http-response :as response])
   (:gen-class))
 
-
 (defmacro transaction [& body]
   "Start redis transaction"
   `(redis/wcar
-    {:spec {:host "localhost" :port 6379}}
+    {:spec {:url (get (System/getenv) "REDIS_URL" "redis://localhost:6379")}}
     ~@body))
 
 (defn check_auth [auth]
