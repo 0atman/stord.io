@@ -6,6 +6,8 @@
                  [hiccup "1.0.5"]
                  [proto-repl "0.3.1"]
                  [lein-ring "0.10.0"]]
-  :ring {:handler c.core/app :port 5000}
+  :ring {:handler c.core/app
+         :port 5000}
+
   :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}}
   :min-lein-version "2.0.0")

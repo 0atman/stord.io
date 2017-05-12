@@ -14,9 +14,10 @@
     {:spec {:url (get (System/getenv) "REDIS_URL" "redis://localhost:6379")}}
     ~@body))
 
-(defn check_auth [auth]
-  "Returns true if the auth key exists"
-  (str (transaction (redis/hget "auth" auth))))
+(defn check_auth
+  "Returns true if the auth key exists."
+  [auth]
+  (boolean (transaction (redis/hget "auth" auth))))
 
 (defn uuid [] (str (java.util.UUID/randomUUID)))
 
@@ -55,7 +56,7 @@
           (let [value (transaction (redis/hget auth name))]
             (if (string? value)
               (ok {:message value})
-              (not-found {:message (str "Not found: " name)})))
+              (not-found {:message (str "Key not found: " name)})))
           (unauthorized! "Invalid auth key")))
 
      (POST "/:name" [data]
@@ -65,5 +66,6 @@
         (if (check_auth auth)
           (let [redis_code (transaction (redis/hset auth name data))]
             (if (= 0 redis_code)
-              (ok {:message "OK"})))
-          (unauthorized! "Invalid auth key for post"))))))
+              (ok {:message "OK. Key updated."})
+              (ok {:message "OK. Key created."})))
+          (unauthorized! "Invalid auth key."))))))
