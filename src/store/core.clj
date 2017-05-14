@@ -14,16 +14,22 @@
     {:spec {:url (get (System/getenv) "REDIS_URL" "redis://localhost:6379")}}
     ~@body))
 
+(defn hget
+  "Get the value of a hash field."
+  [key field]
+  (transaction (redis/hget key field)))
+
+(defn hset
+  "Set the string value of a hash field"
+  [key field value]
+  (transaction (redis/hset key field value)))
+
 (defn check_auth
   "Returns true if the auth key exists."
   [auth]
-  (boolean (transaction (redis/hget "auth" auth))))
+  (boolean (hget "auth" auth)))
 
 (defn uuid [] (str (java.util.UUID/randomUUID)))
-
-(defn custom-handler [f type]
-  (fn [^Exception e data request]
-    (f {:message (.getMessage e), :type type})))
 
 (def app
   (api
@@ -31,8 +37,8 @@
       {:ui "/api-docs"
        :spec "/swagger.json"
        :data {:info {:title "Stord API"}
-                    :description "Stord Api example"}
-             :tags [{:name "api", :description "some apis"}]}}
+                    :description "Stord Api"}
+             :tags [{:name "api", :description "apis"}]}}
 
 
    (GET "/register/:email" []
@@ -40,7 +46,7 @@
      :path-params [email :- String]
      :return {:created String}
      (let [new_auth (uuid)]
-       (transaction (redis/hset "auth" new_auth email))
+       (hset "auth" new_auth email)
        (ok {:created new_auth})))
 
 
@@ -53,7 +59,7 @@
         :path-params [name :- String]
         :return {:message String}
         (if (check_auth auth)
-          (let [value (transaction (redis/hget auth name))]
+          (let [value (hget auth name)]
             (if (string? value)
               (ok {:message value})
               (not-found {:message (str "Key not found: " name)})))
@@ -64,7 +70,7 @@
         :path-params [name :- String]
         :return {:message String}
         (if (check_auth auth)
-          (let [redis_code (transaction (redis/hset auth name data))]
+          (let [redis_code (hset auth name data)]
             (if (= 0 redis_code)
               (ok {:message "OK. Key updated."})
               (ok {:message "OK. Key created."})))
