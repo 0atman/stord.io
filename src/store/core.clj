@@ -1,5 +1,5 @@
-(ns c.core
-  "test"
+(ns store.core
+  "Key/Value store"
   (:require [taoensso.carmine :as redis]
             [schema.core :as s]
             [compojure.api.sweet :refer (api context GET POST defapi)]

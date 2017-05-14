@@ -1,4 +1,4 @@
-(defproject c "0.1.0-SNAPSHOT"
+(defproject store "0.2.0"
   :description "FIXME: write description"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [metosin/compojure-api "1.1.10"]
@@ -6,7 +6,7 @@
                  [hiccup "1.0.5"]
                  [proto-repl "0.3.1"]
                  [lein-ring "0.10.0"]]
-  :ring {:handler c.core/app
+  :ring {:handler store.core/app
          :port 5000}
 
   :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}}
