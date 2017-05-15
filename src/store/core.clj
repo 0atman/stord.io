@@ -5,7 +5,8 @@
             [compojure.api.sweet :refer (api context GET POST defapi)]
             [ring.util.http-response :refer (ok not-found unauthorized!)]
             [compojure.api.exception :as ex]
-            [ring.util.http-response :as response])
+            [ring.util.http-response :as response]
+            [clojure.data.json :as json])
   (:gen-class))
 
 (defmacro transaction
@@ -67,13 +68,13 @@
           (unauthorized! "Invalid auth key")))
 
 
-     (GET "/:name/raw" []
+     (GET "/:name/json" []
         :summary "pulls the key `name` from redis"
         :path-params [name :- String]
         (if (check_auth auth)
           (let [value (hget auth name)]
             (if (string? value)
-              (ok value)
+              (ok (json/read-str value))
               (not-found {:message (str "Key not found: " name)})))
           (unauthorized! "Invalid auth key")))
 

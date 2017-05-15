@@ -8,9 +8,11 @@
                  [org.clojure/tools.nrepl "0.2.12"]
                  [ring "1.6.1"]
                  [lein-ring "0.10.0"]
+                 [org.clojure/data.json "0.2.6"]
                  [ring/ring-jetty-adapter "1.6.1"]]
   :ring {:handler store.core/app
          :port 5000
+         :reload? true
          :nrepl {:start? true
                  :port 38331}}
   :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}}
