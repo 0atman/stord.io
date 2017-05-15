@@ -5,9 +5,13 @@
                  [com.taoensso/carmine "2.16.0"]
                  [hiccup "1.0.5"]
                  [proto-repl "0.3.1"]
-                 [lein-ring "0.10.0"]]
+                 [org.clojure/tools.nrepl "0.2.12"]
+                 [ring "1.6.1"]
+                 [lein-ring "0.10.0"]
+                 [ring/ring-jetty-adapter "1.6.1"]]
   :ring {:handler store.core/app
-         :port 5000}
-
+         :port 5000
+         :nrepl {:start? true
+                 :port 9998}}
   :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}}
   :min-lein-version "2.0.0")
