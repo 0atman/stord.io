@@ -2866,14 +2866,15 @@ net.brehaut.ClojureTools = (function (SH) {
   };
 })(SyntaxHighlighter);
 </script><title>store -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">store</h1><h2 class="project-version">0.2.0</h2><br /><p>FIXME: write description</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.8.0</td></tr><tr><td class="dep-name">metosin/compojure-api</td><td class="dotted"><hr /></td><td class="dep-version">1.1.10</td></tr><tr><td class="dep-name">com.taoensso/carmine</td><td class="dotted"><hr /></td><td class="dep-version">2.16.0</td></tr><tr><td class="dep-name">hiccup</td><td class="dotted"><hr /></td><td class="dep-version">1.0.5</td></tr><tr><td class="dep-name">proto-repl</td><td class="dotted"><hr /></td><td class="dep-version">0.3.1</td></tr><tr><td class="dep-name">org.clojure/tools.nrepl</td><td class="dotted"><hr /></td><td class="dep-version">0.2.12</td></tr><tr><td class="dep-name">ring</td><td class="dotted"><hr /></td><td class="dep-version">1.6.1</td></tr><tr><td class="dep-name">lein-ring</td><td class="dotted"><hr /></td><td class="dep-version">0.10.0</td></tr><tr><td class="dep-name">ring/ring-jetty-adapter</td><td class="dotted"><hr /></td><td class="dep-version">1.6.1</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#store.core">store.core</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#store.core" name="store.core"><h1 class="project-name">store.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Key/Value store</p>
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.8.0</td></tr><tr><td class="dep-name">metosin/compojure-api</td><td class="dotted"><hr /></td><td class="dep-version">1.1.10</td></tr><tr><td class="dep-name">com.taoensso/carmine</td><td class="dotted"><hr /></td><td class="dep-version">2.16.0</td></tr><tr><td class="dep-name">hiccup</td><td class="dotted"><hr /></td><td class="dep-version">1.0.5</td></tr><tr><td class="dep-name">proto-repl</td><td class="dotted"><hr /></td><td class="dep-version">0.3.1</td></tr><tr><td class="dep-name">org.clojure/tools.nrepl</td><td class="dotted"><hr /></td><td class="dep-version">0.2.12</td></tr><tr><td class="dep-name">ring</td><td class="dotted"><hr /></td><td class="dep-version">1.6.1</td></tr><tr><td class="dep-name">lein-ring</td><td class="dotted"><hr /></td><td class="dep-version">0.10.0</td></tr><tr><td class="dep-name">org.clojure/data.json</td><td class="dotted"><hr /></td><td class="dep-version">0.2.6</td></tr><tr><td class="dep-name">ring/ring-jetty-adapter</td><td class="dotted"><hr /></td><td class="dep-version">1.6.1</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#store.core">store.core</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#store.core" name="store.core"><h1 class="project-name">store.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Key/Value store</p>
 </td><td class="codes"><pre class="brush: clojure">(ns store.core
   (:require [taoensso.carmine :as redis]
             [schema.core :as s]
             [compojure.api.sweet :refer (api context GET POST defapi)]
             [ring.util.http-response :refer (ok not-found unauthorized!)]
             [compojure.api.exception :as ex]
-            [ring.util.http-response :as response])
+            [ring.util.http-response :as response]
+            [clojure.data.json :as json])
   (:gen-class))</pre></td></tr><tr><td class="docs"><p>Start redis transaction</p>
 </td><td class="codes"><pre class="brush: clojure">(defmacro transaction
   [&amp; body]
@@ -2918,13 +2919,13 @@ net.brehaut.ClojureTools = (function (SH) {
               (ok {:message value})
               (not-found {:message (str &quot;Key not found: &quot; name)})))
           (unauthorized! &quot;Invalid auth key&quot;)))
-     (GET &quot;/:name/raw&quot; []
+     (GET &quot;/:name/json&quot; []
         :summary &quot;pulls the key `name` from redis&quot;
         :path-params [name :- String]
         (if (check_auth auth)
           (let [value (hget auth name)]
             (if (string? value)
-              (ok value)
+              (ok (json/read-str value))
               (not-found {:message (str &quot;Key not found: &quot; name)})))
           (unauthorized! &quot;Invalid auth key&quot;)))
      (POST &quot;/:name&quot; [data]
