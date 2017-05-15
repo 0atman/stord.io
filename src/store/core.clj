@@ -66,6 +66,18 @@
               (not-found {:message (str "Key not found: " name)})))
           (unauthorized! "Invalid auth key")))
 
+
+     (GET "/:name/raw" []
+        :summary "pulls the key `name` from redis"
+        :path-params [name :- String]
+        (if (check_auth auth)
+          (let [value (hget auth name)]
+            (if (string? value)
+              (ok value)
+              (not-found {:message (str "Key not found: " name)})))
+          (unauthorized! "Invalid auth key")))
+
+
      (POST "/:name" [data]
         :summary "Updates key `name` to `data`"
         :path-params [name :- String]
