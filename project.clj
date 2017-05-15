@@ -12,6 +12,6 @@
   :ring {:handler store.core/app
          :port 5000
          :nrepl {:start? true
-                 :port 443}}
+                 :port 38331}}
   :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}}
   :min-lein-version "2.0.0")

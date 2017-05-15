@@ -12,7 +12,7 @@
   "Start redis transaction"
   [& body]
   `(redis/wcar
-    {:spec {:url (get (System/getenv) "REDISCLOUD_URL" "redis://localhost:6379")}}
+    {:spec {:url (get (System/getenv) "REDIS_URL" "redis://localhost:6379")}}
     ~@body))
 
 (defn hget
