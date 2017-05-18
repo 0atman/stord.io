@@ -12,8 +12,6 @@
                  [ring/ring-jetty-adapter "1.6.1"]]
   :ring {:handler store.core/app
          :port 5000
-         :reload? true
-         :nrepl {:start? true
-                 :port 38331}}
+         :reload? true}
   :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}}
   :min-lein-version "2.0.0")

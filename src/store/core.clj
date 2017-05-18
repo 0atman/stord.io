@@ -6,7 +6,8 @@
             [ring.util.http-response :refer (ok not-found unauthorized!)]
             [compojure.api.exception :as ex]
             [ring.util.http-response :as response]
-            [clojure.data.json :as json])
+            [clojure.data.json :as json]
+            [store.pages :as pages])
   (:gen-class))
 
 (defmacro transaction
@@ -22,7 +23,7 @@
   (transaction (redis/hget key field)))
 
 (defn hset
-  "Set the string value of a hash field"
+  "Set the string value of a hash field."
   [key field value]
   (transaction (redis/hset key field value)))
 
@@ -31,7 +32,10 @@
   [auth]
   (boolean (hget "auth" auth)))
 
-(defn uuid [] (str (java.util.UUID/randomUUID)))
+(defn uuid
+  "return a random uuid string."
+  []
+  (str (java.util.UUID/randomUUID)))
 
 (def app
   (api
@@ -42,22 +46,28 @@
                     :description "Stord Api"}
              :tags [{:name "api", :description "apis"}]}}
 
+   (GET "/" [] :summary "Homepage" (pages/homepage))
 
-   (GET "/register/:email" []
-     :summary "adds a new uuid key to the auth hash, with `email` key"
-     :path-params [email :- String]
-     :return {:created String}
-     (let [new_auth (uuid)]
-       (hset "auth" new_auth email)
-       (ok {:created new_auth})))
+   (context "/auth" []
+     :summary "Auth stuff"
+     :tags ["auth"]
+
+     (GET "/register/:email" []
+       :summary "adds a new api key registered to `email`"
+       :path-params [email :- String]
+       :return {:created String}
+       (let [new_auth (uuid)]
+         (hset "auth" new_auth email)
+         (ok {:created new_auth}))))
 
 
    (context "/api/:auth" []
+     :summary "K/V API"
      :tags ["api"]
      :path-params [auth :- String]
 
      (GET "/:name" []
-        :summary "pulls the key `name` from redis"
+        :summary "pulls the key `name` from the db"
         :path-params [name :- String]
         :return {:message String}
         (if (check_auth auth)
@@ -69,7 +79,7 @@
 
 
      (GET "/:name/json" []
-        :summary "pulls the key `name` from redis"
+        :summary "pulls the key `name` from the db and attempts to decode the stored json body"
         :path-params [name :- String]
         (if (check_auth auth)
           (let [value (hget auth name)]
