@@ -6,7 +6,7 @@
 (defn homepage []
   (page/html5
     [:head
-      [:title "title"]
+      [:title "Store: A key-value REST collection for simple web apps."]
       (page/include-css "https://thebestmotherfucking.website/css/main.css")
       [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]]
     [:body
