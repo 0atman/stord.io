@@ -48,17 +48,17 @@
 
    (GET "/" [] :summary "Homepage" (pages/homepage))
 
-   (context "/auth" []
-     :summary "Auth stuff"
-     :tags ["auth"]
-
-     (GET "/register/:email" []
-       :summary "adds a new api key registered to `email`"
-       :path-params [email :- String]
-       :return {:created String}
-       (let [new_auth (uuid)]
-         (hset "auth" new_auth email)
-         (ok {:created new_auth}))))
+;   (context "/auth" []
+;     :summary "Auth stuff"
+;     :tags ["auth"]
+;
+;     (GET "/register/:email" []
+;       :summary "adds a new api key registered to `email`"
+;       :path-params [email :- String]
+;       :return {:created String}
+;       (let [new_auth (uuid)]
+;         (hset "auth" new_auth email)
+;         (ok {:created new_auth}))))
 
 
    (context "/api/:auth" []
