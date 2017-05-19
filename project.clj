@@ -8,7 +8,9 @@
                  [org.clojure/tools.nrepl "0.2.12"]
                  [ring "1.6.1"]
                  [lein-ring "0.10.0"]
+                 [ring-basic-authentication "1.0.5"]
                  [org.clojure/data.json "0.2.6"]
+                 [com.cemerick/drawbridge "0.0.7"]
                  [ring/ring-jetty-adapter "1.6.1"]]
   :ring {:handler store.core/app
          :port 5000
