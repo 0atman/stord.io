@@ -3,12 +3,18 @@
   (:require [hiccup.page :as page])
   (:use [hiccup.core]))
 
+(defn include-head []
+  [:head
+    [:title "Store: A lightweight key-value REST collection for simple web apps."]
+    (page/include-css "https://thebestmotherfucking.website/css/main.css")
+    [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]])
+
+(defn link [href text]
+  [:a {:href href} text])
+
 (defn homepage []
   (page/html5
-    [:head
-      [:title "Store: A lightweight key-value REST collection for simple web apps."]
-      (page/include-css "https://thebestmotherfucking.website/css/main.css")
-      [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]]
+    (include-head)
     [:body
       [:h1 "A key-value REST collection for simple web apps."]
       [:p
@@ -20,9 +26,14 @@
         [:a {:href "/api-docs/"} "here"] ". "
         "Use the sandbox api key " [:code "[sandbox]"] " to test with. "
         "Sandbox data is free forever. Use it for IOT apps, prototypes or anything else you can think of!"]
-    [:p "To secure your own data, please buy an API Key. "
+    [:p "To secure your own data, please " (link "/buy" "buy an API Key.") " "
         "Prices start at $1 for 1,000 keys and the proceeds help support "
-        [:a {:href "http://0atman.com"} "me "] " make more awesome services like this one. Thanks!"]
+        (link "https://github.com/0atman" "me") " make more awesome services like this one. Thanks!"]))
 
-    (page/include-js "https://gumroad.com/js/gumroad.js")
-    [:a.gumroad-button {:href "https://gum.co/l/EviMe" :target "_blank"} "Buy an API Key"]))
+(defn buy []
+  (page/html5
+    (include-head)
+    (page/include-js "https://gumroad.com/js/gumroad-embed.js")
+    [:div.gumroad-product-embed {:data-gumroad-product-id "EviMe"}
+      (link "https://gumroad.com/l/EviMe" "Loading...")]
+    [:p (link "/" "↩ go back")]))
