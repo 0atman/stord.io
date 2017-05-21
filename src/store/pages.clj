@@ -16,4 +16,6 @@
           [:span "Think about the ideal way to store data in a web app. Write the code to make it happen."]
           [:author "Aaron Swartz, " [:a {:href "http://webpy.org/philosophy"} "praphrased"]]]]]
     (page/include-js "https://gist.github.com/0atman/a4a620edd9ec1a7c35748f1e5d612e73.js")
-    [:p "Play with the api live " [:a {:href "/api-docs/"} "here"] "."]))
+    [:p "Play with the public api live "
+        [:a {:href "/api-docs/"} "here"] ". "
+        "Use the public api key " [:code "public"] " to test with."]))
