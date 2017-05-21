@@ -35,8 +35,9 @@
   [key field value]
   (transaction (redis/hset key field value)))
 
-(defn gumroad [key]
+(defn gumroad
   "check gumroad for the license key."
+  [key]
   (client/post "https://api.gumroad.com/v2/licenses/verify"
     {:form-params {:product_permalink "EviMe"
                    :license_key key}
@@ -44,7 +45,9 @@
      :as :json}))
 
 (defn check_auth
-  "Returns true if the auth key exists. If it doesn't, starts a `future` to check gumroad and update redis."
+  "Returns true if the auth key exists.
+  If it doesn't, checks gumroad and if license exists, updates. redis.
+  *NOTE*: This means first run is slow, find a way to pre-cache this."
   [auth]
   (let [redis_auth (hget "auth" auth)]
     (if (boolean redis_auth)
@@ -67,8 +70,9 @@
       (wrap-params)
       (wrap-session)))
 
-(defn wrap-drawbridge [handler]
+(defn wrap-drawbridge
   "wraps a ring handler in the drawbridge nrepl just for `/repl`, with auth."
+  [handler]
   (fn [req]
     (let [handler (if (= "/repl" (:uri req))
                     (wrap-basic-authentication
