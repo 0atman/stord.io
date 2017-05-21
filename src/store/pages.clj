@@ -18,4 +18,7 @@
     (page/include-js "https://gist.github.com/0atman/a4a620edd9ec1a7c35748f1e5d612e73.js")
     [:p "Play with the public api live "
         [:a {:href "/api-docs/"} "here"] ". "
-        "Use the public api key " [:code "[publi]c"] " to test with."]))
+        "Use the public api key " [:code "[publi]c"] " to test with."]
+    (page/include-js "https://gumroad.com/js/gumroad-embed.js"
+    [:div.classgumroad-product-embed {:data-gumroad-product-id "EviMe" data-outbound-embed "true"]
+        [:a {href "https://gumroad.com/l/EviMe"} "Loading...]]))
