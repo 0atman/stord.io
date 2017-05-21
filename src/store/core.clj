@@ -36,6 +36,7 @@
   (transaction (redis/hset key field value)))
 
 (defn gumroad [key]
+  "check gumroad for the license key."
   (client/post "https://api.gumroad.com/v2/licenses/verify"
     {:form-params {:product_permalink "EviMe"
                    :license_key key}
@@ -48,17 +49,18 @@
   (let [redis_auth (hget "auth" auth)]
     (if (boolean redis_auth)
       true
-      (do
-        (future
-          (let [gumroad_auth (gumroad auth)]
-            (if (= (:status gumroad_auth) 200)
-              (hset "auth" auth (-> gumroad_auth :body :purchase :email)))))
+      (let [gumroad_auth (gumroad auth)]
+        (if (= (:status gumroad_auth) 200)
+          (future (hset "auth" auth (-> gumroad_auth :body :purchase :email)))
+          true)
         false))))
 
 (defn authenticated? [name pass]
+  "Compares the creds with the local env creds, for basic auth."
   (= [name pass] [(System/getenv "AUTH_USER") (System/getenv "AUTH_PASS")]))
 
 (def drawbridge-handler
+  "This is a ring handler for nrepl."
   (-> (cemerick.drawbridge/ring-handler)
       (wrap-keyword-params)
       (wrap-nested-params)
@@ -66,6 +68,7 @@
       (wrap-session)))
 
 (defn wrap-drawbridge [handler]
+  "wraps a ring handler in the drawbridge nrepl just for `/repl`, with auth."
   (fn [req]
     (let [handler (if (= "/repl" (:uri req))
                     (wrap-basic-authentication
