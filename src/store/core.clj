@@ -14,7 +14,8 @@
             [clojure.data.json :as json]
             [store.pages :as pages]
             [ring.middleware.basic-authentication :refer [wrap-basic-authentication]]
-            [cemerick.drawbridge :as drawbridge])
+            [cemerick.drawbridge :as drawbridge]
+            [clj-http.client :as client])
   (:gen-class))
 
 (defmacro transaction
@@ -34,15 +35,25 @@
   [key field value]
   (transaction (redis/hset key field value)))
 
-(defn check_auth
-  "Returns true if the auth key exists."
-  [auth]
-  (boolean (hget "auth" auth)))
+(defn gumroad [key]
+  (client/post "https://api.gumroad.com/v2/licenses/verify"
+    {:form-params {:product_permalink "EviMe"
+                   :license_key key}
+     :throw-exceptions false
+     :as :json}))
 
-(defn uuid
-  "return a random uuid string."
-  []
-  (str (java.util.UUID/randomUUID)))
+(defn check_auth
+  "Returns true if the auth key exists. If it doesn't, starts a `future` to check gumroad and update redis."
+  [auth]
+  (let [redis_auth (hget "auth" auth)]
+    (if (boolean redis_auth)
+      true
+      (do
+        (future
+          (let [gumroad_auth (gumroad auth)]
+            (if (= (:status gumroad_auth) 200)
+              (hset "auth" auth (-> gumroad_auth :body :purchase :email)))))
+        false))))
 
 (defn authenticated? [name pass]
   (= [name pass] [(System/getenv "AUTH_USER") (System/getenv "AUTH_PASS")]))
@@ -78,15 +89,6 @@
        (context "/auth" []
          :summary "Auth stuff"
          :tags ["auth"])
-
-        ;  (GET "/register/:email" []
-        ;    :summary "adds a new api key registered to `email`"
-        ;    :path-params [email :- String]
-        ;    :return {:created String}
-        ;    (let [new_auth (uuid)]
-        ;      (hset "auth" new_auth email)
-        ;      (ok {:created new_auth}))))
-
 
        (context "/api/:auth" []
          :summary "K/V API"
