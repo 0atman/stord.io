@@ -2866,7 +2866,7 @@ net.brehaut.ClojureTools = (function (SH) {
   };
 })(SyntaxHighlighter);
 </script><title>store -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">store</h1><h2 class="project-version">0.2.0</h2><br /><p>FIXME: write description</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.8.0</td></tr><tr><td class="dep-name">metosin/compojure-api</td><td class="dotted"><hr /></td><td class="dep-version">1.1.10</td></tr><tr><td class="dep-name">com.taoensso/carmine</td><td class="dotted"><hr /></td><td class="dep-version">2.16.0</td></tr><tr><td class="dep-name">hiccup</td><td class="dotted"><hr /></td><td class="dep-version">1.0.5</td></tr><tr><td class="dep-name">proto-repl</td><td class="dotted"><hr /></td><td class="dep-version">0.3.1</td></tr><tr><td class="dep-name">org.clojure/tools.nrepl</td><td class="dotted"><hr /></td><td class="dep-version">0.2.12</td></tr><tr><td class="dep-name">ring</td><td class="dotted"><hr /></td><td class="dep-version">1.6.1</td></tr><tr><td class="dep-name">lein-ring</td><td class="dotted"><hr /></td><td class="dep-version">0.10.0</td></tr><tr><td class="dep-name">org.clojure/data.json</td><td class="dotted"><hr /></td><td class="dep-version">0.2.6</td></tr><tr><td class="dep-name">ring/ring-jetty-adapter</td><td class="dotted"><hr /></td><td class="dep-version">1.6.1</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#store.core">store.core</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#store.core" name="store.core"><h1 class="project-name">store.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Key/Value store</p>
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.8.0</td></tr><tr><td class="dep-name">metosin/compojure-api</td><td class="dotted"><hr /></td><td class="dep-version">1.1.10</td></tr><tr><td class="dep-name">com.taoensso/carmine</td><td class="dotted"><hr /></td><td class="dep-version">2.16.0</td></tr><tr><td class="dep-name">hiccup</td><td class="dotted"><hr /></td><td class="dep-version">1.0.5</td></tr><tr><td class="dep-name">proto-repl</td><td class="dotted"><hr /></td><td class="dep-version">0.3.1</td></tr><tr><td class="dep-name">org.clojure/tools.nrepl</td><td class="dotted"><hr /></td><td class="dep-version">0.2.12</td></tr><tr><td class="dep-name">ring</td><td class="dotted"><hr /></td><td class="dep-version">1.6.1</td></tr><tr><td class="dep-name">lein-ring</td><td class="dotted"><hr /></td><td class="dep-version">0.10.0</td></tr><tr><td class="dep-name">org.clojure/data.json</td><td class="dotted"><hr /></td><td class="dep-version">0.2.6</td></tr><tr><td class="dep-name">ring/ring-jetty-adapter</td><td class="dotted"><hr /></td><td class="dep-version">1.6.1</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#store.core">store.core</a></li><li><a href="#store.pages">store.pages</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#store.core" name="store.core"><h1 class="project-name">store.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Key/Value store</p>
 </td><td class="codes"><pre class="brush: clojure">(ns store.core
   (:require [taoensso.carmine :as redis]
             [schema.core :as s]
@@ -2874,7 +2874,8 @@ net.brehaut.ClojureTools = (function (SH) {
             [ring.util.http-response :refer (ok not-found unauthorized!)]
             [compojure.api.exception :as ex]
             [ring.util.http-response :as response]
-            [clojure.data.json :as json])
+            [clojure.data.json :as json]
+            [store.pages :as pages])
   (:gen-class))</pre></td></tr><tr><td class="docs"><p>Start redis transaction</p>
 </td><td class="codes"><pre class="brush: clojure">(defmacro transaction
   [&amp; body]
@@ -2883,14 +2884,16 @@ net.brehaut.ClojureTools = (function (SH) {
     ~@body))</pre></td></tr><tr><td class="docs"><p>Get the value of a hash field.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn hget
   [key field]
-  (transaction (redis/hget key field)))</pre></td></tr><tr><td class="docs"><p>Set the string value of a hash field</p>
+  (transaction (redis/hget key field)))</pre></td></tr><tr><td class="docs"><p>Set the string value of a hash field.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn hset
   [key field value]
   (transaction (redis/hset key field value)))</pre></td></tr><tr><td class="docs"><p>Returns true if the auth key exists.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn check_auth
   [auth]
-  (boolean (hget &quot;auth&quot; auth)))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn uuid [] (str (java.util.UUID/randomUUID)))</pre></td></tr><tr><td class="docs">
+  (boolean (hget &quot;auth&quot; auth)))</pre></td></tr><tr><td class="docs"><p>return a random uuid string.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn uuid
+  []
+  (str (java.util.UUID/randomUUID)))</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(def app
   (api
     {:swagger
@@ -2899,18 +2902,23 @@ net.brehaut.ClojureTools = (function (SH) {
        :data {:info {:title &quot;Stord API&quot;}
                     :description &quot;Stord Api&quot;}
              :tags [{:name &quot;api&quot;, :description &quot;apis&quot;}]}}
-   (GET &quot;/register/:email&quot; []
-     :summary &quot;adds a new uuid key to the auth hash, with `email` key&quot;
-     :path-params [email :- String]
-     :return {:created String}
-     (let [new_auth (uuid)]
-       (hset &quot;auth&quot; new_auth email)
-       (ok {:created new_auth})))
+   (GET &quot;/&quot; [] :summary &quot;Homepage&quot; (pages/homepage))
+   (context &quot;/auth&quot; []
+     :summary &quot;Auth stuff&quot;
+     :tags [&quot;auth&quot;]
+     (GET &quot;/register/:email&quot; []
+       :summary &quot;adds a new api key registered to `email`&quot;
+       :path-params [email :- String]
+       :return {:created String}
+       (let [new_auth (uuid)]
+         (hset &quot;auth&quot; new_auth email)
+         (ok {:created new_auth}))))
    (context &quot;/api/:auth&quot; []
+     :summary &quot;K/V API&quot;
      :tags [&quot;api&quot;]
      :path-params [auth :- String]
      (GET &quot;/:name&quot; []
-        :summary &quot;pulls the key `name` from redis&quot;
+        :summary &quot;pulls the key `name` from the db&quot;
         :path-params [name :- String]
         :return {:message String}
         (if (check_auth auth)
@@ -2920,7 +2928,7 @@ net.brehaut.ClojureTools = (function (SH) {
               (not-found {:message (str &quot;Key not found: &quot; name)})))
           (unauthorized! &quot;Invalid auth key&quot;)))
      (GET &quot;/:name/json&quot; []
-        :summary &quot;pulls the key `name` from redis&quot;
+        :summary &quot;pulls the key `name` from the db and attempts to decode the stored json body&quot;
         :path-params [name :- String]
         (if (check_auth auth)
           (let [value (hget auth name)]
@@ -2937,7 +2945,24 @@ net.brehaut.ClojureTools = (function (SH) {
             (if (= 0 redis_code)
               (ok {:message &quot;OK. Key updated.&quot;})
               (ok {:message &quot;OK. Key created.&quot;})))
-          (unauthorized! &quot;Invalid auth key.&quot;))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/gdeer81/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_store.core">store.core</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
+          (unauthorized! &quot;Invalid auth key.&quot;))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#store.pages" name="store.pages"><h1 class="project-name">store.pages</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Key/Value store</p>
+</td><td class="codes"><pre class="brush: clojure">(ns store.pages
+  (:require [hiccup.page :as page])
+  (:use [hiccup.core]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn homepage []
+  (page/html5
+    [:head
+      [:title &quot;Store: A key-value REST collection for simple web apps.&quot;]
+      (page/include-css &quot;https://thebestmotherfucking.website/css/main.css&quot;)
+      [:meta {:name &quot;viewport&quot; :content &quot;width=device-width, initial-scale=1.0&quot;}]]
+    [:body
+      [:h1 &quot;A key-value REST collection for simple web apps.&quot;]
+      [:p
+        [:blockquote
+          [:span &quot;Think about the ideal way to store data in a web app. Write the code to make it happen.&quot;]
+          [:author &quot;Aaron Swartz, &quot; [:a {:href &quot;http://webpy.org/philosophy&quot;} &quot;praphrased&quot;]]]]]
+    (page/include-js &quot;https://gist.github.com/0atman/a4a620edd9ec1a7c35748f1e5d612e73.js&quot;)
+    [:p &quot;Play with the api live &quot; [:a {:href &quot;/api-docs/&quot;} &quot;here&quot;] &quot;.&quot;]))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/gdeer81/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_store.core">store.core</li><li class="floating-toc-li" id="floating-toc_store.pages">store.pages</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
 SyntaxHighlighter.all();
 
 // hackity hack

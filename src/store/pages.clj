@@ -18,7 +18,11 @@
     (page/include-js "https://gist.github.com/0atman/a4a620edd9ec1a7c35748f1e5d612e73.js")
     [:p "Play with the public api live "
         [:a {:href "/api-docs/"} "here"] ". "
-        "Use the public api key " [:code "[publi]c"] " to test with."]
-    (page/include-js "https://gumroad.com/js/gumroad-embed.js"
-    [:div.classgumroad-product-embed {:data-gumroad-product-id "EviMe" data-outbound-embed "true"]
-        [:a {href "https://gumroad.com/l/EviMe"} "Loading...]]))
+        "Use the sandbox api key " [:code "[sandbox]"] " to test with. "
+        "Sandbox data is free forever. Use it for IOT apps, prototypes or anything else you can think of!"]
+    [:p "To secure your own data, please buy an API Key. "
+        "Prices start at $1 for 1,000 keys and the proceeds help support "
+        [:a {:href "http://0atman.com"} "me "] " make more awesome services like this one. Thanks!"]
+
+    (page/include-js "https://gumroad.com/js/gumroad.js")
+    [:a.gumroad-button {:href "https://gum.co/l/EviMe" :target "_blank"} "Buy an API Key"]))
