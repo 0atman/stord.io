@@ -6,7 +6,7 @@
 (defn homepage []
   (page/html5
     [:head
-      [:title "Store: A key-value REST collection for simple web apps."]
+      [:title "Store: A lightweight key-value REST collection for simple web apps."]
       (page/include-css "https://thebestmotherfucking.website/css/main.css")
       [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]]
     [:body
@@ -18,4 +18,4 @@
     (page/include-js "https://gist.github.com/0atman/a4a620edd9ec1a7c35748f1e5d612e73.js")
     [:p "Play with the public api live "
         [:a {:href "/api-docs/"} "here"] ". "
-        "Use the public api key " [:code "public"] " to test with."]))
+        "Use the public api key " [:code "[publi]c"] " to test with."]))
