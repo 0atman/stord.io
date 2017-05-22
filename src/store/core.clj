@@ -54,9 +54,10 @@
       true
       (let [gumroad_auth (gumroad auth)]
         (if (= (:status gumroad_auth) 200)
-          (future (hset "auth" auth (-> gumroad_auth :body :purchase :email)))
-          true)
-        false))))
+          (do
+            (future (hset "auth" auth (-> gumroad_auth :body :purchase :email)))
+            true)
+          false)))))
 
 (defn authenticated? [name pass]
   "Compares the creds with the local env creds, for basic auth."
