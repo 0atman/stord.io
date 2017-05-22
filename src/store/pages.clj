@@ -31,8 +31,8 @@
         (link "https://github.com/0atman" "me") " make more awesome services like this one. Thanks!"]
     [:br]
     [:p
-      [:span.mfw "Made with "
-        (link "http://clojure.org" "λ")
+      [:span.mfw "Made by " (link "http://github.com/0atman" "0atman")
+        " with " (link "http://clojure.org" "λ")
         " in London"]]))
 
 (defn buy []
