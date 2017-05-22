@@ -28,7 +28,12 @@
         "Sandbox data is free forever. Use it for IOT apps, prototypes or anything else you can think of!"]
     [:p "To secure your own data, please " (link "/buy" "buy an API Key.") " "
         "Prices start at $1 for 1,000 keys and the proceeds help support "
-        (link "https://github.com/0atman" "me") " make more awesome services like this one. Thanks!"]))
+        (link "https://github.com/0atman" "me") " make more awesome services like this one. Thanks!"]
+    [:br]
+    [:p
+      [:span.mfw "Made with "
+        (link "http://clojure.org" "λ")
+        " in London"]]))
 
 (defn buy []
   (page/html5
