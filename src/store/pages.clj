@@ -37,3 +37,10 @@
     [:div.gumroad-product-embed {:data-gumroad-product-id "EviMe"}
       (link "https://gumroad.com/l/EviMe" "Loading...")]
     [:p (link "/" "↩ go back")]))
+
+
+(defn contact []
+  (page/html5
+    (include-head)
+    [:p (link "mailto:tris@blackgateresearch.com" "Email me")
+        " any questions"]))

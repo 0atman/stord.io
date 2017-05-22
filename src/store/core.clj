@@ -92,6 +92,7 @@
 
        (GET "/" [] :summary "Index" (pages/homepage))
        (GET "/buy" [] :summary "Key Purchase" (pages/buy))
+       (GET "/contact" [] :summary "Contact page" (pages/contact))
 
        (context "/auth" []
          :summary "Auth stuff"
