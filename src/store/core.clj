@@ -59,8 +59,9 @@
             true)
           false)))))
 
-(defn authenticated? [name pass]
+(defn authenticated?
   "Compares the creds with the local env creds, for basic auth."
+  [name pass]
   (= [name pass] [(System/getenv "AUTH_USER") (System/getenv "AUTH_PASS")]))
 
 (def drawbridge-handler
@@ -94,10 +95,6 @@
        (GET "/" [] :summary "Index" (pages/homepage))
        (GET "/buy" [] :summary "Key Purchase" (pages/buy))
        (GET "/contact" [] :summary "Contact page" (pages/contact))
-
-       (context "/auth" []
-         :summary "Auth stuff"
-         :tags ["auth"])
 
        (context "/api/:auth" []
          :summary "K/V API"
