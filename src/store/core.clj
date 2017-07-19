@@ -92,8 +92,8 @@
                         :description "Stord Api"}
                  :tags [{:name "api", :description "apis"}]}}
 
-       (GET "/" [] :summary "Index" (pages/homepage))
-       (GET "/buy" [] :summary "Key Purchase" (pages/buy))
+       (GET "/"        [] :summary "Index"        (pages/homepage))
+       (GET "/buy"     [] :summary "Key Purchase" (pages/buy))
        (GET "/contact" [] :summary "Contact page" (pages/contact))
 
        (context "/api/:auth" []
