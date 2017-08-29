@@ -1,7 +1,9 @@
 (ns store.core
   "Key/Value store"
   (:require [taoensso.carmine :as redis]
+            [ring.adapter.jetty :refer :all]
             [schema.core :as s]
+            [environ.core :as env]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.nested-params :refer [wrap-nested-params]]
             [ring.middleware.params :refer [wrap-params]]
@@ -134,3 +136,7 @@
                   (ok {:message "OK. Key updated."})
                   (ok {:message "OK. Key created."})))
               (unauthorized! "Invalid auth key.")))))))
+
+(defn -main []
+  (run-jetty app {:port (Integer/parseInt (or (env/env :port)
+                                              5000))}))
