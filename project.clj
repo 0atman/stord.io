@@ -17,4 +17,5 @@
          :port 5000
          :reload? true}
   :profiles {:dev {:plugins [[lein-ring "0.10.0"]]}}
-  :min-lein-version "2.0.0")
+  :min-lein-version "2.0.0"
+  :aot :all)
