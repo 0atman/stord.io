@@ -6,7 +6,7 @@
 (defn include-head []
   [:head
     [:title "Store: A lightweight key-value REST collection for simple web apps."]
-    (page/include-css "https://thebestmotherfucking.website/css/main.css")
+    (page/include-css "https://thebestmotherfucking.website/main.css")
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]])
 
 (defn link [href text]
